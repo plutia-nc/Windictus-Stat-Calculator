@@ -28,8 +28,16 @@ public class Main {
         base.add(prefix, suffix);
         base.calculateFinalDamage();
 
-        System.out.println("\nFinal damage without the scroll(s) is " + oldStats.getFinalDamage() + "%");
-        System.out.println("Final damage with the scroll(s) is " + base.getFinalDamage() + "%");
+        System.out.println("-----------------");
+        System.out.println("Final gear score without the scroll(s) is \u001B[33m" + oldStats.getFinalDamage() + "\u001B[0m.");
+        System.out.println("Final gear score with the scroll(s) is \u001B[35m" + base.getFinalDamage() + "\u001B[0m.");
+        double difference = Math.round(((double) base.getFinalDamage() / oldStats.getFinalDamage() * 100.0 - 100) * 100) / 100.0;
+        String differenceText = switch ((int) (difference / Math.abs(difference))) {
+            case 1 -> "increased by \u001B[32m" + difference + "\u001B[0m%";
+            case -1 -> "decreased by \u001B[31m" + Math.abs(difference) + "\u001B[0m%";
+            default -> "\u001B[36mnot changed\u001B[0m";
+        };
+        System.out.println("\nOverall damage has " + differenceText + ".");
 
     }
 }
